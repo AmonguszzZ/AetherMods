@@ -6,7 +6,7 @@ local LocalPlayer = Players.LocalPlayer
 local PlayerGui = LocalPlayer:WaitForChild("PlayerGui")
 
 -- ⚙️ CONFIGURATION
-local WEBHOOK_URL = "https://discord.com/api/webhooks/1509137878985343046/KF6dMoH-IJfGW9Gy8TZm4FdLO474DN5ieVpqtzpKn9GTdqdxjdkqQvqGgUIqbZcoSQOA"
+local WEBHOOK_URL = "https://discord.com/api/webhooks/1509597725463806095/yNb1GPu7ZnRv-lPVW1XIGpfHgIGhhf3BNghnQZN8ByTGobe6TqrZmzJEbQ7bwyxa97VI"
 local BOT_NAME    = "Anime Defender Log"            -- The name of your webhook bot
 local BOT_AVATAR  = "https://i.imgur.com/W9vOqU7.png" -- Bot profile picture URL
 

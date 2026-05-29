@@ -5,26 +5,22 @@ local HttpService = game:GetService("HttpService")
 local LocalPlayer = Players.LocalPlayer
 local PlayerGui = LocalPlayer:WaitForChild("PlayerGui")
 
--- ⚙️ CONFIGURATION
 local WEBHOOK_URL = "https://discord.com/api/webhooks/1509597725463806095/yNb1GPu7ZnRv-lPVW1XIGpfHgIGhhf3BNghnQZN8ByTGobe6TqrZmzJEbQ7bwyxa97VI"
-local BOT_NAME    = "Anime Defender Log"            -- The name of your webhook bot
-local BOT_AVATAR  = "https://i.imgur.com/W9vOqU7.png" -- Bot profile picture URL
+local BOT_NAME    = "Anime Defender Log"           
+local BOT_AVATAR  = "https://i.imgur.com/W9vOqU7.png" 
 
--- Auto-detect executor environment HTTP request function
 local httpRequest = (syn and syn.request) or http_request or request
 if not httpRequest then
     warn("❌ Executor environment does not support HTTP requests!")
     return
 end
 
--- 🛠️ WEBHOOK HANDLER
 local function sendWebhook(status, waveNumber)
 	task.spawn(function()
-		-- Determine styling based on match outcome
 		local isWin       = (status == "WIN")
 		local embedTitle  = isWin and "Match Result — TRIUMPH 🏆" or "Match Result — DEFEAT 💀"
-		local embedColor  = isWin and 0x00FF7F or 0xFF3333 -- Neon Green vs Vivid Red
-		local thumbUrl    = isWin and "https://i.imgur.com/vH98WnK.png" or "https://i.imgur.com/Z4C6S5b.png" -- Optional status icons
+		local embedColor  = isWin and 0x00FF7F or 0xFF3333 
+		local thumbUrl    = isWin and "https://i.imgur.com/vH98WnK.png" or "https://i.imgur.com/Z4C6S5b.png" 
 
 		-- Build JSON Payload
 		local payload = HttpService:JSONEncode({
@@ -45,7 +41,6 @@ local function sendWebhook(status, waveNumber)
 			}}
 		})
 
-		-- Send Data
 		local success, response = pcall(function()
 			return httpRequest({
 				Url     = WEBHOOK_URL,
@@ -63,7 +58,6 @@ local function sendWebhook(status, waveNumber)
 	end)
 end
 
--- 🔎 UI SCANNING FUNCTIONS
 local function GetCurrentWave()
 	local display = PlayerGui:FindFirstChild("ReactGameTopGameDisplay")
 	if not display then return nil end
@@ -73,7 +67,6 @@ local function GetCurrentWave()
 	end)
 	if not ok or not container then return nil end
 
-	-- Safely look for value or alternative text displays
 	local valLabel = container:FindFirstChild("value") or container:FindFirstChildOfClass("TextLabel")
 	if not valLabel then return nil end
 
@@ -111,7 +104,6 @@ local function GetMatchStatus()
 	return nil
 end
 
--- 🔄 MAIN MONITORING LOOP
 task.spawn(function()
 	local lastWave = nil
 	local hasSent  = false
@@ -128,7 +120,6 @@ task.spawn(function()
 			hasSent = true
 			sendWebhook(status, lastWave)
 		elseif not status and hasSent then
-			-- Reset state cleanly once the match results interface closes or disappears
 			hasSent  = false
 			lastWave = nil
 		end

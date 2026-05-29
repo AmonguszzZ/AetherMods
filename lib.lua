@@ -22,7 +22,6 @@ local function sendWebhook(status, waveNumber)
 		local embedColor  = isWin and 0x00FF7F or 0xFF3333 
 		local thumbUrl    = isWin and "https://i.imgur.com/vH98WnK.png" or "https://i.imgur.com/Z4C6S5b.png" 
 
-		-- Build JSON Payload
 		local payload = HttpService:JSONEncode({
 			username   = BOT_NAME,
 			avatar_url = BOT_AVATAR,
